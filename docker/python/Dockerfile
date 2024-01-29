@@ -34,12 +34,13 @@ RUN python --version && pip3 --version
 # Set the working directory
 WORKDIR /var
 
-# Install pipenv
-RUN pip3 install pipenv
+
+
 
 # Install project dependencies
-COPY Pipfile Pipfile.lock /var/
-RUN pipenv install --deploy --ignore-pipfile
+
+#RUN pipenv install --deploy --ignore-pipfile
 
 EXPOSE 8000
-CMD ["pipenv", "run", "uvicorn", "main:app", "--reload"]
+CMD sleep 1000
+#CMD ["pipenv", "run", "uvicorn", "main:app", "--reload"]

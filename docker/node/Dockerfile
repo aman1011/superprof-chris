@@ -7,3 +7,4 @@ RUN npm install express
 
 COPY ./  .
 CMD node app.js
+#CMD sleep 10000
