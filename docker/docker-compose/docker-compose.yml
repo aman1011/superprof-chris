@@ -1,0 +1,27 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - python-app
+  db:
+      image: postgres:latest
+      environment:
+        POSTGRES_DB: mydatabase
+        POSTGRES_USER: myuser
+        POSTGRES_PASSWORD: mypassword
+      volumes:
+        - ./postgres-init:/docker-entrypoint-initdb.d
+  python-app:
+    image: python:3.8
+    volumes:
+      - ./python-app:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgres://user:123456@db:5432/demo"
+    command: ["sh", "-c", "pip install --no-cache-dir -r /app/requirements.txt && pip install flask && python /app/app.py"]
